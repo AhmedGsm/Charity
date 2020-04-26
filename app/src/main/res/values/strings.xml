@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Charity</string>
+
+    <string name="charity_introduction">
+    This app made for making search for benefactors and send them text messages or emails
+    to convince them to donate money or food or medicines for charity associations, to help
+    jobless or destitute or poor people who are suffering during acual COVID-19 pandemy.
+    You can search for benefactors by entering the locals that are profited during the
+    COVID-19 pandemic by selling a lot of products, for example search for "Pharmacy" in a
+    specific region or department.
+    </string>
+
     <string name="search_benefactor_btn_text">Search benefactor</string>
 </resources>
