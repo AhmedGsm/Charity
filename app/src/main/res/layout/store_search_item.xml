@@ -11,13 +11,13 @@
         android:layout_height="40dp"
         android:layout_gravity="fill"
         android:src="@drawable/ic_store_mall_directory_black"
-        app:layout_constraintBottom_toBottomOf="@+id/address_text_view"
+        app:layout_constraintBottom_toBottomOf="@+id/store_address_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/name_text_view" />
+        app:layout_constraintTop_toTopOf="@+id/store_name_text_view" />
 
     <TextView
         android:contentDescription="@string/image_description"
-        android:id="@+id/name_text_view"
+        android:id="@+id/store_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -31,7 +31,7 @@
         tools:text="Place name" />
 
     <TextView
-        android:id="@+id/address_text_view"
+        android:id="@+id/store_address_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -41,6 +41,6 @@
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/name_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/store_name_text_view"
         tools:text="Place address" />
 </androidx.constraintlayout.widget.ConstraintLayout>
