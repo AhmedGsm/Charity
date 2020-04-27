@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BenefactorsFindingActivity"></activity>
+        <activity android:name=".SearchResultsActivity"
+            android:label="@string/activity_search_name"></activity>
+        <activity android:name=".BenefactorsFindingActivity" />
         <activity android:name=".MainActivity">
-
             <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyCeOX-6wnF-i2hiWcwFRUWuqt4Cgbib7KA" />
