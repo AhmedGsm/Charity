@@ -1,6 +1,5 @@
 package com.example.charity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
@@ -10,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -19,14 +17,15 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BenefactorsFindingActivity extends AppCompatActivity {
+public class StoresFindingActivity extends AppCompatActivity {
 
-    private static final String TAG = BenefactorsFindingActivity.class.getSimpleName();
+    private static final String TAG = StoresFindingActivity.class.getSimpleName();
     private static final String SEARCH_QUERY = "search_query";
 
     // Get search view reference
@@ -41,11 +40,18 @@ public class BenefactorsFindingActivity extends AppCompatActivity {
 
     private String API_KEY = API_KEY2;
     private int i = 1;
+    public static final String PLACE_SEARCHED_BUNDLE = "places_budle";
+    public final String PLACES_IDS_EXTRA = "places_ids";;
+    public static final String PLACES_NAMES_EXTRA = "places_names";
+    public static final String PLACES_ADDRESSES_EXTRA = "places_addresses";
+    private ArrayList<String> mPlacesNames = new ArrayList<>();
+    private ArrayList<String> mPlacesAddresses = new ArrayList<>();
+    private ArrayList<String> mPlacesIds = new ArrayList<>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_benefactors_finding);
+        setContentView(R.layout.activity_stores_finding);
         // Bind butterKnife library to activity
         ButterKnife.bind(this);
         // Initialize the SDK
@@ -63,7 +69,7 @@ public class BenefactorsFindingActivity extends AppCompatActivity {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intentToCurrentActivity = new Intent(BenefactorsFindingActivity.this, BenefactorsFindingActivity.class);
+                Intent intentToCurrentActivity = new Intent(StoresFindingActivity.this, StoresFindingActivity.class);
                 intentToCurrentActivity.setAction(Intent.ACTION_SEARCH);
                 intentToCurrentActivity.putExtra(SEARCH_QUERY, query);
                 startActivity(intentToCurrentActivity);
@@ -98,7 +104,18 @@ public class BenefactorsFindingActivity extends AppCompatActivity {
             if(placesFound != null && placesFound.size() > 0) {
                 Log.i(TAG, "Places found log: " + placesFound);
                 // Go to listing places activity
-                Intent intentToDetailsPlacesActivity = new Intent(BenefactorsFindingActivity.this, SearchResultsActivity.class );
+                Intent intentToDetailsPlacesActivity = new Intent(StoresFindingActivity.this, SearchResultsActivity.class );
+                for(int i = 0; i < placesFound.size(); i++) {
+                    mPlacesIds.add(placesFound.get(i).getPlaceId());
+                    mPlacesNames.add(placesFound.get(i).getPrimaryText(null).toString());
+                    mPlacesAddresses.add(placesFound.get(i).getSecondaryText(null).toString());
+                }
+                // Create bundle to store place name and addresses to send them with intent
+                Bundle bundlePlaceDetails = new Bundle();
+                bundlePlaceDetails.putStringArrayList(PLACES_IDS_EXTRA,mPlacesNames);
+                bundlePlaceDetails.putStringArrayList(PLACES_NAMES_EXTRA,mPlacesNames);
+                bundlePlaceDetails.putStringArrayList(PLACES_ADDRESSES_EXTRA,mPlacesNames);
+                intentToDetailsPlacesActivity.putExtras(bundlePlaceDetails);
                 startActivity(intentToDetailsPlacesActivity);
             } else {
                 Log.i(TAG, getString(R.string.place_not_found_str));
