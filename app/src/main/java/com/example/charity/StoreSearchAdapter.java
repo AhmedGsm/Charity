@@ -17,6 +17,7 @@ package com.example.charity;
 */
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,23 +25,19 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.libraries.places.api.model.Place;
-
-import java.util.List;
-
 public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.PlaceViewHolder> {
 
     private Context mContext;
-    private List<Place> mStores;
+    private Bundle mBundle;
 
     /**
      * Constructor using the context and the db cursor
      *
      * @param context the calling context/activity
      */
-    public StoreSearchAdapter(Context context, List<Place> stores) {
+    public StoreSearchAdapter(Context context, Bundle bundle) {
         this.mContext = context;
-        this.mStores = stores;
+        this.mBundle = bundle;
     }
 
     /**
@@ -58,6 +55,13 @@ public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.
         return new PlaceViewHolder(view);
     }
 
+    public void swapStores(Bundle bundle) {
+        mBundle = bundle;
+        if (mBundle != null) {
+            // Force the RecyclerView to refresh
+            this.notifyDataSetChanged();
+        }
+    }
     /**
      * Binds the data from a particular position in the cursor to the corresponding view holder
      *
@@ -66,19 +70,12 @@ public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.
      */
     @Override
     public void onBindViewHolder(PlaceViewHolder holder, int position) {
-        String placeName = mStores.get(position).getName();
-        String placeAddress = mStores.get(position).getAddress();
+        String placeName = mBundle.getStringArrayList(StoresFindingActivity.PLACES_NAMES_EXTRA).get(position);
+        String placeAddress = mBundle.getStringArrayList(StoresFindingActivity.PLACES_ADDRESSES_EXTRA).get(position);
         holder.storeNameTextView.setText(placeName);
         holder.storeAddressTextView.setText(placeAddress);
     }
 
-    public void swapStores(List<Place> stores){
-        mStores = stores;
-        if (mStores != null) {
-            // Force the RecyclerView to refresh
-            this.notifyDataSetChanged();
-        }
-    }
 
 
     /**
@@ -91,8 +88,8 @@ public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.
 
         public PlaceViewHolder(View itemView) {
             super(itemView);
-            storeNameTextView = (TextView) itemView.findViewById(R.id.name_text_view);
-            storeAddressTextView = (TextView) itemView.findViewById(R.id.address_text_view);
+            storeNameTextView = (TextView) itemView.findViewById(R.id.store_name_text_view);
+            storeAddressTextView = (TextView) itemView.findViewById(R.id.store_address_text_view);
         }
 
     }
@@ -104,7 +101,7 @@ public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.
      */
     @Override
     public int getItemCount() {
-        if(mStores==null) return 0;
-        return mStores.size();
+        if(mBundle==null) return 0;
+        return mBundle.size();
     }
 }
