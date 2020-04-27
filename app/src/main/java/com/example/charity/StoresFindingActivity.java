@@ -108,7 +108,7 @@ public class StoresFindingActivity extends AppCompatActivity {
                 for(int i = 0; i < placesFound.size(); i++) {
                     mPlacesIds.add(placesFound.get(i).getPlaceId());
                     mPlacesNames.add(placesFound.get(i).getPrimaryText(null).toString());
-                    mPlacesAddresses.add(placesFound.get(i).getSecondaryText(null).toString());
+                    mPlacesAddresses.add(placesFound.get(i).getFullText(null).toString());
                 }
                 // Create bundle to store place name and addresses to send them with intent
                 Bundle bundlePlaceDetails = new Bundle();
