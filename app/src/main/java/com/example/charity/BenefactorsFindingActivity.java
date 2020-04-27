@@ -12,22 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.charity.utilities.BenefactorsFindingUtils;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
-import com.google.android.libraries.places.api.model.RectangularBounds;
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,8 +94,19 @@ public class BenefactorsFindingActivity extends AppCompatActivity {
             mSearchView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             // Find place list
-            BenefactorsFindingUtils.findPlacesList( mPlacesClient, searchQuery);
-
+            List<AutocompletePrediction> placesFound = BenefactorsFindingUtils.findPlacesList(this, mPlacesClient, searchQuery);
+            if(placesFound != null && placesFound.size() > 0) {
+                Log.i(TAG, "Places found log: " + placesFound);
+                // Go to listing places activity
+                Intent intentToDetailsPlacesActivity = new Intent(BenefactorsFindingActivity.this, SearchResultsActivity.class );
+                startActivity(intentToDetailsPlacesActivity);
+            } else {
+                Log.i(TAG, getString(R.string.place_not_found_str));
+                Toast.makeText(this, getString(R.string.place_not_found_str),Toast.LENGTH_SHORT).show();
+            }
+            // Display search view and hide progress
+            mProgressBar.setVisibility(View.GONE);
+            mSearchView.setVisibility(View.VISIBLE);
         }
     }
 

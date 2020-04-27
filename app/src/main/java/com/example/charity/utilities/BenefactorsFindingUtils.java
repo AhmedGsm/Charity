@@ -1,7 +1,10 @@
 package com.example.charity.utilities;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.charity.R;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
@@ -10,10 +13,14 @@ import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class BenefactorsFindingUtils {
 
     private static final String TAG = BenefactorsFindingUtils.class.getSimpleName() ;
-
+    private static List<AutocompletePrediction>  mAutocompletePredictions = new ArrayList<>();
     /**
      *  Finds benefactors places location from google server
      *
@@ -21,7 +28,8 @@ public class BenefactorsFindingUtils {
      * @param searchQuery Query entered from user
      */
 
-    public static void findPlacesList(PlacesClient placesClient, String searchQuery) {
+    public static List<AutocompletePrediction> findPlacesList(Context context, PlacesClient placesClient, String searchQuery) {
+
         // Create a new token for the autocomplete session.
         AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
         // Create a dummy RectangularBounds object for testing purposes.
@@ -37,18 +45,18 @@ public class BenefactorsFindingUtils {
         // Set findAutocompletePredictions
         placesClient.findAutocompletePredictions(request).addOnSuccessListener(
                 findAutocompletePredictionsResponse -> {
+                     mAutocompletePredictions =
+                            findAutocompletePredictionsResponse.getAutocompletePredictions();
 
-                    for (AutocompletePrediction prediction : findAutocompletePredictionsResponse.getAutocompletePredictions()) {
-                        Log.e(TAG, "onSuccess: " + prediction.getPrimaryText(null).toString());
-
-                    }
                 }
         ).addOnFailureListener(exception -> {
             if (exception instanceof ApiException) {
                 ApiException apiException = (ApiException) exception;
-                Log.e(TAG, "Place not found: " + apiException.getStatusCode() + " " + apiException.getStatusMessage());
+                Log.e(TAG, context.getString(R.string.place_not_found_str) + apiException.getStatusCode() + " " + apiException.getStatusMessage());
+                Toast.makeText(context, context.getString(R.string.place_not_found_Api_error),Toast.LENGTH_SHORT).show();
             }
         });
 
+        return mAutocompletePredictions;
     }
 }

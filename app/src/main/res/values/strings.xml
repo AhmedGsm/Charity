@@ -16,4 +16,6 @@
         after search done, the server displays a list of locals with their details such as
         phone number, email, etc, to use these informations to call for donation.
     </string>
+    <string name="place_not_found_str">Place not found</string>
+    <string name="place_not_found_Api_error">Place not fetched due to server authorization problem</string>
 </resources>
