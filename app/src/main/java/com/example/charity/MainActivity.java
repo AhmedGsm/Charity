@@ -2,9 +2,7 @@ package com.example.charity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set click listener for button to go to search activity
         searchBenefactorBtn.setOnClickListener(view -> {
-            Intent intentToSearchActivity = new Intent(MainActivity.this,BenefactorsFindingActivity.class);
+            Intent intentToSearchActivity = new Intent(MainActivity.this, StoresFindingActivity.class);
             // Start activity with explicit intent
             startActivity(intentToSearchActivity);
         });
