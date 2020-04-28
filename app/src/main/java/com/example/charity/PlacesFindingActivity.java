@@ -39,10 +39,10 @@ public class PlacesFindingActivity extends AppCompatActivity {
     ProgressBar mProgressBar;
     private PlacesClient mPlacesClient;
     //Google account Api key
-    private String API_KEY1 = "AIzaSyCeOX-6wnF-i2hiWcwFRUWuqt4Cgbib7KA";
-    private String API_KEY2 = "AIzaSyBDTy_VMG4yVBe36tWMftmO-kXmjpenODg";
+    private static String API_KEY1 = "AIzaSyCeOX-6wnF-i2hiWcwFRUWuqt4Cgbib7KA";
+    private static String API_KEY2 = "AIzaSyBDTy_VMG4yVBe36tWMftmO-kXmjpenODg";
 
-    private String API_KEY = API_KEY2;
+    public static String API_KEY = API_KEY2;
     private int i = 1;
     public static final String PLACE_SEARCHED_BUNDLE = "places_budle";
     public static final String PLACES_IDS_EXTRA = "places_ids";;
