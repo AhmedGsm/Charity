@@ -38,6 +38,6 @@ public class PlaceContract {
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLACES).build();
 
         public static final String TABLE_NAME = "places";
-        public static final String COLUMN_PLACE_ID = BaseColumns._ID;
+        public static final String COLUMN_PLACE_ID = "place_ID";
     }
 }
