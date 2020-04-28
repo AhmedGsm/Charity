@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SearchResultsActivity"
             android:label="@string/activity_search_name"></activity>
-        <activity android:name=".StoresFindingActivity" />
+        <activity android:name=".PlacesFindingActivity" />
         <activity android:name=".MainActivity">
             <meta-data
                 android:name="com.google.android.geo.API_KEY"

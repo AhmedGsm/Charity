@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set click listener for button to go to search activity
         searchBenefactorBtn.setOnClickListener(view -> {
-            Intent intentToSearchActivity = new Intent(MainActivity.this, StoresFindingActivity.class);
+            Intent intentToSearchActivity = new Intent(MainActivity.this, PlacesFindingActivity.class);
             // Start activity with explicit intent
             startActivity(intentToSearchActivity);
         });

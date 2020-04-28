@@ -22,15 +22,14 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StoresFindingActivity extends AppCompatActivity {
+public class PlacesFindingActivity extends AppCompatActivity {
 
-    private static final String TAG = StoresFindingActivity.class.getSimpleName();
+    private static final String TAG = PlacesFindingActivity.class.getSimpleName();
     private static final String SEARCH_QUERY = "search_query";
 
     // Get search view reference
@@ -52,7 +51,7 @@ public class StoresFindingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stores_finding);
+        setContentView(R.layout.activity_places_finding);
         // Bind butterKnife library to activity
         ButterKnife.bind(this);
         // Initialize the SDK
@@ -70,7 +69,7 @@ public class StoresFindingActivity extends AppCompatActivity {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intentToCurrentActivity = new Intent(StoresFindingActivity.this, StoresFindingActivity.class);
+                Intent intentToCurrentActivity = new Intent(PlacesFindingActivity.this, PlacesFindingActivity.class);
                 intentToCurrentActivity.setAction(Intent.ACTION_SEARCH);
                 intentToCurrentActivity.putExtra(SEARCH_QUERY, query);
                 startActivity(intentToCurrentActivity);
@@ -141,7 +140,7 @@ public class StoresFindingActivity extends AppCompatActivity {
                     if( mPlaces.size() > 0) {
                         Log.i(TAG, "Places found : " + mPlaces);
                         // Go to listing places activity
-                        Intent intentToDetailsPlacesActivity = new Intent(StoresFindingActivity.this, SearchResultsActivity.class );
+                        Intent intentToDetailsPlacesActivity = new Intent(PlacesFindingActivity.this, SearchResultsActivity.class );
                         for(int i = 0; i < mPlaces.size(); i++) {
                             placesIds.add(mPlaces.get(i).getPlaceId());
                             placesNames.add(mPlaces.get(i).getPrimaryText(null).toString());
