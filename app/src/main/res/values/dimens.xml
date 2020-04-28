@@ -2,4 +2,24 @@
 <resources>
     <dimen name="margin">8dp</dimen>
     <dimen name="normalTextSize">20sp</dimen>
+    <dimen name="fixed_dimension_1dp">1dp</dimen>
+    <dimen name="fixed_dimension_2dp">2dp</dimen>
+    <dimen name="fixed_dimension_4dp">4dp</dimen>
+    <dimen name="fixed_dimension_8dp">8dp</dimen>
+    <dimen name="fixed_dimension_15dp">15dp</dimen>
+    <dimen name="fixed_dimension_20dp">20dp</dimen>
+    <dimen name="responsive_dimension_8dp">8dp</dimen>
+    <dimen name="responsive_dimension_15dp">15dp</dimen>
+    <dimen name="responsive_dimension_18sp">18sp</dimen>
+    <dimen name="responsive_dimension_20sp">20sp</dimen>
+    <dimen name="dimensionImage200dp">200dp</dimen>
+    <dimen name="fixed_dimension_3dp">3dp</dimen>
+    <dimen name="fixed_dimension_32dp">32dp</dimen>
+    <dimen name="fixed_dimension_60dp">60dp</dimen>
+    <dimen name="fixed_dimension_80dp">80dp</dimen>
+    <dimen name="fixed_dimension_10dp">10dp</dimen>
+    <dimen name="fixed_dimension_12dp">12dp</dimen>
+    <dimen name="fixed_dimension_50dp">50dp</dimen>
+    <dimen name="fixed_dimension_55dp">55dp</dimen>
+    <dimen name="fixed_dimension_140dp">140dp</dimen>
 </resources>

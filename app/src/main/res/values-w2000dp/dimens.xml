@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="responsive_dimension_8dp">16dp</dimen>
+    <dimen name="responsive_dimension_15dp">24dp</dimen>
+    <dimen name="responsive_dimension_18sp">26sp</dimen>
+    <dimen name="responsive_dimension_20sp">28sp</dimen>
+
+</resources>
