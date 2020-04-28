@@ -4,6 +4,7 @@ package com.example.charity.adapters;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ public class PlacesDetailsAdapter extends RecyclerView.Adapter<PlacesDetailsAdap
 
     private final Context mContext;
     private List<Place> mPlaces;
+    private OnClickRecyclerViewItem mOnClickRecyclerViewItem;
+
 
     static class PlaceViewHolder extends RecyclerView.ViewHolder {
         PlaceViewHolder(CardView CardView) {
@@ -36,9 +39,10 @@ public class PlacesDetailsAdapter extends RecyclerView.Adapter<PlacesDetailsAdap
         }
     }
 
-    public PlacesDetailsAdapter(Context context, List<Place> places) {
+    public PlacesDetailsAdapter(Context context, List<Place> places, OnClickRecyclerViewItem onClickRecyclerViewItem) {
         this.mContext = context;
         this.mPlaces = places;
+        this.mOnClickRecyclerViewItem = onClickRecyclerViewItem;
     }
 
     @NonNull
@@ -76,6 +80,7 @@ public class PlacesDetailsAdapter extends RecyclerView.Adapter<PlacesDetailsAdap
         if(mPlaces.get(position).getWebsiteUri() != null) {
             placeWebsiteTv.setText(Objects.requireNonNull(mPlaces.get(position).getWebsiteUri()).toString());
         }
+        holder.itemView.setOnClickListener(view -> mOnClickRecyclerViewItem.onItemClick(position));
     }
 
     @Override
@@ -88,5 +93,7 @@ public class PlacesDetailsAdapter extends RecyclerView.Adapter<PlacesDetailsAdap
         this.mPlaces = places;
         notifyDataSetChanged();
     }
-
+    public interface OnClickRecyclerViewItem{
+         void onItemClick(int positionAdapter);
+    }
 }
