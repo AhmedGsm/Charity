@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContactActivity">
+    <!-- Include item to diplay details -->
+    <Button
+        android:id="@+id/send_sms_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/send_sms_button_str"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone_call_button" />
+
+    <include layout="@layout/item_details" />
+
+    <EditText
+        android:id="@+id/sms_content_editText"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <Button
+        android:id="@+id/show_location_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/show_location_button_str"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/send_sms_button" />
+
+    <Button
+        android:id="@+id/visit_website_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/visit_website_button_str"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/show_location_button" />
+
+    <Button
+        android:id="@+id/phone_call_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/phone_call_button_str"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sms_content_editText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

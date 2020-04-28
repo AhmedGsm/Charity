@@ -28,4 +28,9 @@
     <string name="image_description_website">Place website icon</string>
     <string name="data_not_available_str">None</string>
     <string name="no_places_in_data_provider_str">No places registered, go to main screen to register places</string>
+    <string name="activity_contact_name">Contact</string>
+    <string name="send_sms_button_str">Send SMS</string>
+    <string name="visit_website_button_str">Visit website</string>
+    <string name="show_location_button_str">Show  location in map</string>
+    <string name="phone_call_button_str">Call</string>
 </resources>
