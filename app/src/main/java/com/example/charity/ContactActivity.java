@@ -80,5 +80,18 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
+        // Disable website button if the website link is not supplied
+        placeWebsiteTv.setEnabled(true);
+        if (website.equals("None")  ) {
+            visitWebsiteButton.setEnabled(false);
+        }
+        // Implement phone call logic
+        visitWebsiteButton.setOnClickListener(view -> {
+            Uri webpage = Uri.parse(website);
+            Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        });
     }
 }
