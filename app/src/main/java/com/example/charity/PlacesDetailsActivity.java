@@ -89,7 +89,6 @@ public class PlacesDetailsActivity extends AppCompatActivity {
     public void findPlacesListByPlacesIds(String placeIdsQuery) {
         List<Place.Field> placeFields = Arrays.asList(Place.Field.ID,
                 Place.Field.NAME,
-                Place.Field.NAME,
                 Place.Field.ADDRESS,
                 Place.Field.PHONE_NUMBER,
                 Place.Field.WEBSITE_URI,
