@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.PlaceViewHolder> {
+public class PlacesSearchAdapter extends RecyclerView.Adapter<PlacesSearchAdapter.PlaceViewHolder> {
 
     private Context mContext;
     private Bundle mBundle;
@@ -35,7 +35,7 @@ public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.
      *
      * @param context the calling context/activity
      */
-    public StoreSearchAdapter(Context context, Bundle bundle) {
+    public PlacesSearchAdapter(Context context, Bundle bundle) {
         this.mContext = context;
         this.mBundle = bundle;
     }
@@ -70,8 +70,8 @@ public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.
      */
     @Override
     public void onBindViewHolder(PlaceViewHolder holder, int position) {
-        String placeName = mBundle.getStringArrayList(StoresFindingActivity.PLACES_NAMES_EXTRA).get(position);
-        String placeAddress = mBundle.getStringArrayList(StoresFindingActivity.PLACES_ADDRESSES_EXTRA).get(position);
+        String placeName = mBundle.getStringArrayList(PlacesFindingActivity.PLACES_NAMES_EXTRA).get(position);
+        String placeAddress = mBundle.getStringArrayList(PlacesFindingActivity.PLACES_ADDRESSES_EXTRA).get(position);
         holder.storeNameTextView.setText(placeName);
         holder.storeAddressTextView.setText(placeAddress);
     }
@@ -102,6 +102,6 @@ public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.
     @Override
     public int getItemCount() {
         if(mBundle==null) return 0;
-        return mBundle.getStringArrayList(StoresFindingActivity.PLACES_IDS_EXTRA).size();
+        return mBundle.getStringArrayList(PlacesFindingActivity.PLACES_IDS_EXTRA).size();
     }
 }
