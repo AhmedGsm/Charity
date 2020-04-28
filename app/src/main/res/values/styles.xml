@@ -7,11 +7,50 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <!-- Style for normal text view -->
     <style name="textNormalStyle" >
         <item name="fontFamily">@font/roboto_light</item>
         <item name="android:layout_margin">@dimen/margin</item>
         <item name="android:textSize">@dimen/normalTextSize</item>
     </style>
+
+    <!-- Style Card view list item for places details -->
+    <style name="cardViewListItemStyle" >
+        <item name="cardElevation">5dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardCornerRadius">@dimen/fixed_dimension_4dp</item>
+        <item name="cardPreventCornerOverlap">true</item>
+    </style>
+
+    <!-- Style for text views -->
+    <style name="detailTextStyle" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/responsive_dimension_18sp</item>
+        <item name="fontFamily">@font/roboto_light</item>
+        <item name="android:textColor">@color/colorGray900</item>
+        <item name="android:paddingLeft">@dimen/responsive_dimension_8dp</item>
+        <item name="android:paddingStart">@dimen/responsive_dimension_8dp</item>
+        <item name="android:paddingEnd">@dimen/responsive_dimension_8dp</item>
+        <item name="android:paddingRight">@dimen/responsive_dimension_8dp</item>
+    </style>
+
+
+    <style name="sectionNameStyle" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/responsive_dimension_18sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/sawarabi_mincho_medium</item>
+        <item name="android:paddingLeft">@dimen/responsive_dimension_8dp</item>
+        <item name="android:paddingStart">@dimen/responsive_dimension_8dp</item>
+        <item name="android:paddingEnd">@dimen/responsive_dimension_8dp</item>
+        <item name="android:paddingRight">@dimen/responsive_dimension_8dp</item>
+    </style>
+
 
 </resources>
