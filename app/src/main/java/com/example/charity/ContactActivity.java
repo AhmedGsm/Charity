@@ -3,8 +3,11 @@ package com.example.charity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Objects;
@@ -18,6 +21,10 @@ public class ContactActivity extends AppCompatActivity {
     @BindView(R.id.place_address) TextView placeAddressTv;
     @BindView(R.id.phone_number) TextView phoneNumberTv;
     @BindView(R.id.website) TextView placeWebsiteTv;
+    @BindView(R.id.phone_call_button) Button phoneCallButton;
+    @BindView(R.id.send_sms_button) Button sendSmsButton;
+    @BindView(R.id.show_location_button) Button showMapButton;
+    @BindView(R.id.visit_website_button) Button visitWebsiteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,5 +64,21 @@ public class ContactActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(website)) {
             placeWebsiteTv.setText(website);
         }
+        // Disable call & SMS button if the phone number is not supplied
+        phoneCallButton.setEnabled(true);
+        sendSmsButton.setEnabled(true);
+        if (phoneNumber.equals("None")  ) {
+            phoneCallButton.setEnabled(false);
+            sendSmsButton.setEnabled(false);
+        }
+        // Implement phone call logic
+        phoneCallButton.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + phoneNumber));
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        });
+
     }
 }
