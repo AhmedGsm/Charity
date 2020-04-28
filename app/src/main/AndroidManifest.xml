@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PlacesDetailsActivity"
+            android:label="@string/activity_details_name"/>
         <activity android:name=".SearchResultsActivity"
-            android:label="@string/activity_search_name"></activity>
+            android:label="@string/activity_search_name" />
         <activity android:name=".PlacesFindingActivity" />
         <activity android:name=".MainActivity">
             <meta-data
@@ -28,7 +30,6 @@
             android:name=".database.PlaceContentProvider"
             android:authorities="com.example.charity"
             android:exported="false" />
-
     </application>
 
 </manifest>

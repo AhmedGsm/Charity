@@ -21,4 +21,5 @@
     <string name="activity_search_name">Search list</string>
     <string name="image_description">Store icon</string>
     <string name="save_stores_button_str">Save list</string>
+    <string name="activity_details_name">Places details</string>
 </resources>
