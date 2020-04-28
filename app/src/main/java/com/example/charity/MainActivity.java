@@ -20,6 +20,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /**
+         * For testing purposes THIS CODE WILL BE DELETED
+         */
+        Intent intent = new Intent(this,PlacesDetailsActivity.class);
+        startActivity(intent);
 
         // Bind butterKnife library to activity
         ButterKnife.bind(this);

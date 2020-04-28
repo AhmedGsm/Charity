@@ -22,4 +22,10 @@
     <string name="image_description">Store icon</string>
     <string name="save_stores_button_str">Save list</string>
     <string name="activity_details_name">Places details</string>
+    <string name="image_description_names">Place name icon</string>
+    <string name="image_description_address">Place address icon</string>
+    <string name="image_description_phone">Place phone icon</string>
+    <string name="image_description_website">Place website icon</string>
+    <string name="data_not_available_str">None</string>
+    <string name="no_places_in_data_provider_str">No places registered, go to main screen to register places</string>
 </resources>

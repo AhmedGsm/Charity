@@ -1,50 +1,53 @@
 package com.example.charity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.charity.adapters.PlacesDetailsAdapter;
 import com.example.charity.database.PlaceContract;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.AutocompletePrediction;
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class PlacesDetailsActivity extends AppCompatActivity {
     private static final String TAG = PlacesDetailsActivity.class.getSimpleName();
     private PlacesClient mPlacesClient;
     private int mIndex = 0;
-    private List<Place> mPlaceList = new ArrayList<>();
+    private List<Place> mPlacesList = new ArrayList<>();
     private int mCursorDataCount;
+    private PlacesDetailsAdapter mAdapter;
+    @BindView(R.id.recylerViewList) RecyclerView mRecyclerView;
+    // Get search view reference
+    @BindView(R.id.ProgressBar) ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_places_details);
-        //
+
+        // Bind butterKnife library to activity
+        ButterKnife.bind(this);
 
         // Initialize the SDK
         Places.initialize(getApplicationContext(), PlacesFindingActivity.API_KEY);
@@ -52,6 +55,10 @@ public class PlacesDetailsActivity extends AppCompatActivity {
         // Create a new Places client instance
         mPlacesClient = Places.createClient(this);
 
+        // set up the recycler view
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new PlacesDetailsAdapter(this, null);
+        mRecyclerView.setAdapter(mAdapter);
         // Query places Ids from database
         Uri uri = PlaceContract.PlaceEntry.CONTENT_URI;
         final Cursor data = getContentResolver().query(
@@ -60,12 +67,17 @@ public class PlacesDetailsActivity extends AppCompatActivity {
                 null,
                 null,
                 null);
+        if (data == null || data.getCount() == 0) {
+            Toast.makeText(this,R.string.no_places_in_data_provider_str,Toast.LENGTH_LONG).show();
+            mProgressBar.setVisibility(View.GONE);
+            return;
+        }
         mCursorDataCount = data.getCount();
-        if (data == null || mCursorDataCount == 0) return;
         while (data.moveToNext()) {
             String placeId = data.getString(data.getColumnIndex(PlaceContract.PlaceEntry.COLUMN_PLACE_ID));
             findPlacesListByPlacesIds(placeId);
         }
+        data.close();
     }
 
     /**
@@ -89,21 +101,19 @@ public class PlacesDetailsActivity extends AppCompatActivity {
         // Add a listener to handle the response.
         fetchPlaceResponseTask.addOnSuccessListener(fetchPlaceResponse -> {
             Place place = fetchPlaceResponse.getPlace();
-            mPlaceList.add(place);
+            mPlacesList.add(place);
             if (mIndex == mCursorDataCount) {
-                //mAdapter.swapPlaces(mPlaceList);
-                //mGeofencing.updateGeofencesList(mPlaceList);
-                //if (mIsEnabled) mGeofencing.registerAllGeofences();
-                Log.i(TAG, "Place found: " + place.getName());
+                mAdapter.swapPlaces(mPlacesList);
+                mProgressBar.setVisibility(View.GONE);
+                Log.i(TAG, "Places found: " + place.getName());
             }
         });
 
         fetchPlaceResponseTask.addOnFailureListener(exception -> {
             if (exception instanceof ApiException) {
-                if (mPlaceList.size() > 0 && mIndex == mCursorDataCount) {
-                    //mAdapter.swapPlaces(mPlaceList);
-                    //mGeofencing.updateGeofencesList(mPlaceList);
-                    //if (mIsEnabled) mGeofencing.registerAllGeofences();
+                if (mPlacesList.size() > 0 && mIndex == mCursorDataCount) {
+                    mAdapter.swapPlaces(mPlacesList);
+                    mProgressBar.setVisibility(View.GONE);
                 }
                 ApiException apiException = (ApiException) exception;
                 int statusCode = apiException.getStatusCode();
