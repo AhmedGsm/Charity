@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -27,6 +28,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,12 +43,12 @@ public class PlacesDetailsActivity extends AppCompatActivity implements PlacesDe
     @BindView(R.id.recylerViewList) RecyclerView mRecyclerView;
     // Get search view reference
     @BindView(R.id.ProgressBar) ProgressBar mProgressBar;
-    public final String STRING_KEY_PLACE_NAME = "place_name_key";
-    public final String STRING_KEY_PLACE_ADDRESS = "place_address_key";
-    public final String STRING_KEY_PLACE_PHONE = "place_phone_key";
-    public final String STRING_KEY_PLACE_WEBSITE= "place_website_key";
-    public final String STRING_KEY_PLACE_LONGITUDE= "place_longitude_key";
-    public final String STRING_KEY_PLACE_LATITUDE= "place_longitude_key";
+    public static final String STRING_KEY_PLACE_NAME = "place_name_key";
+    public static final String STRING_KEY_PLACE_ADDRESS = "place_address_key";
+    public static final String STRING_KEY_PLACE_PHONE = "place_phone_key";
+    public static final String STRING_KEY_PLACE_WEBSITE= "place_website_key";
+    public static final String STRING_KEY_PLACE_LONGITUDE= "place_longitude_key";
+    public static final String STRING_KEY_PLACE_LATITUDE= "place_longitude_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,12 +137,28 @@ public class PlacesDetailsActivity extends AppCompatActivity implements PlacesDe
         Place place = mPlacesList.get(positionAdapter);
         // Fill extras bundle of Intent
         Bundle bundle = new Bundle();
-        bundle.putString(STRING_KEY_PLACE_NAME,place.getName());
-        bundle.putString(STRING_KEY_PLACE_ADDRESS,place.getAddress());
-        bundle.putString(STRING_KEY_PLACE_PHONE,place.getPhoneNumber());
-        bundle.putString(STRING_KEY_PLACE_WEBSITE,place.getName());
-        bundle.putDouble(STRING_KEY_PLACE_LONGITUDE,place.getLatLng().latitude);
-        bundle.putDouble(STRING_KEY_PLACE_LATITUDE,place.getLatLng().latitude);
+        bundle.putString(STRING_KEY_PLACE_NAME, getString(R.string.data_not_available_str));
+        if (!TextUtils.isEmpty(place.getName())) {
+            bundle.putString(STRING_KEY_PLACE_NAME, place.getName());
+        }
+        bundle.putString(STRING_KEY_PLACE_ADDRESS, getString(R.string.data_not_available_str));
+        if (!TextUtils.isEmpty(place.getAddress())) {
+            bundle.putString(STRING_KEY_PLACE_ADDRESS, place.getAddress());
+        }
+        bundle.putString(STRING_KEY_PLACE_PHONE, getString(R.string.data_not_available_str));
+        if (!TextUtils.isEmpty(place.getPhoneNumber())) {
+            bundle.putString(STRING_KEY_PLACE_PHONE, place.getPhoneNumber());
+        }
+        bundle.putString(STRING_KEY_PLACE_WEBSITE, getString(R.string.data_not_available_str));
+        if (place.getWebsiteUri() != null) {
+            bundle.putString(STRING_KEY_PLACE_WEBSITE, place.getWebsiteUri().toString());
+        }
+        if (place.getLatLng() != null ) {
+            bundle.putDouble(STRING_KEY_PLACE_LONGITUDE, place.getLatLng().latitude);
+        }
+        if (place.getLatLng() != null) {
+            bundle.putDouble(STRING_KEY_PLACE_LATITUDE, place.getLatLng().latitude);
+        }
         // Initialize intent to contact activity
         Intent intentToContactActivity = new Intent(this, ContactActivity.class);
         intentToContactActivity.putExtras(bundle);
