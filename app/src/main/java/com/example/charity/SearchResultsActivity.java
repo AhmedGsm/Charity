@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+
+import com.example.charity.database.PlaceContract;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,13 +34,30 @@ public class SearchResultsActivity extends AppCompatActivity {
         // Receive intent from search results intent
         Intent currentIntent= getIntent();
         Bundle bundleFromSearchResultsActivity = currentIntent.getExtras();
-
+        int sizebundle = bundleFromSearchResultsActivity.size();
         // set up the recycler view
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new StoreSearchAdapter(SearchResultsActivity.this, null);
         mRecyclerView.setAdapter(mAdapter);
         // Display store found in recycler view
         mAdapter.swapStores(bundleFromSearchResultsActivity);
+
+        // Save store ids in content provider
+        saveListButton.setOnClickListener(view -> {
+            saveIdsInContentProvider(bundleFromSearchResultsActivity);
+        });
     }
 
+    /**
+     * Helper method to save store Ids list to content provider
+     */
+    private void saveIdsInContentProvider(Bundle placesBundle) {
+        ArrayList<String> placesIdList =  placesBundle.getStringArrayList(PlacesFindingActivity.PLACES_IDS_EXTRA);
+        // Initialize Content values
+        ContentValues values = new ContentValues();
+        for(int i = 0; i < placesIdList.size(); i++) {
+            values.put(PlaceContract.PlaceEntry.COLUMN_PLACE_ID,placesIdList.get(i));
+            getContentResolver().insert(PlaceContract.PlaceEntry.CONTENT_URI,values);
+        }
+    }
 }
