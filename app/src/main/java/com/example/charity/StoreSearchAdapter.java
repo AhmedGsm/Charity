@@ -102,6 +102,6 @@ public class StoreSearchAdapter extends RecyclerView.Adapter<StoreSearchAdapter.
     @Override
     public int getItemCount() {
         if(mBundle==null) return 0;
-        return mBundle.size();
+        return mBundle.getStringArrayList(StoresFindingActivity.PLACES_IDS_EXTRA).size();
     }
 }
