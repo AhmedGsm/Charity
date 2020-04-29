@@ -42,8 +42,8 @@ public class ContactActivity extends AppCompatActivity {
         String placeAddress = bundleFromDetailsActivity.getString(PlacesDetailsActivity.STRING_KEY_PLACE_ADDRESS);
         String phoneNumber = bundleFromDetailsActivity.getString(PlacesDetailsActivity.STRING_KEY_PLACE_PHONE);
         String website = bundleFromDetailsActivity.getString(PlacesDetailsActivity.STRING_KEY_PLACE_WEBSITE);
-        Double longitude = bundleFromDetailsActivity.getDouble(PlacesDetailsActivity.STRING_KEY_PLACE_LONGITUDE);
-        Double latitude = bundleFromDetailsActivity.getDouble(PlacesDetailsActivity.STRING_KEY_PLACE_LATITUDE);
+        double longitude = bundleFromDetailsActivity.getDouble(PlacesDetailsActivity.STRING_KEY_PLACE_LONGITUDE);
+        double latitude = bundleFromDetailsActivity.getDouble(PlacesDetailsActivity.STRING_KEY_PLACE_LATITUDE);
         // If website is null replace it with 'None' text inside textView
         placeNameTv.setText(R.string.data_not_available_str);
         if(!TextUtils.isEmpty(placeName)) {
@@ -93,5 +93,16 @@ public class ContactActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
+
+        // Implement Map navigating
+         Uri geoLocationUri = Uri.parse("geo:" + latitude + "," + longitude + "?z=5");
+        showMapButton.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(geoLocationUri);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+
+            }
+    });
+}
 }
