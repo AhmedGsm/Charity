@@ -39,4 +39,10 @@
         jobless and needy peaple during this pandemic COVID-19. We appreciate your support
         so far in funding our project.
     </string>
+    <string name="permission_rejected_str">Location fine permission is rejected</string>
+    <string name="permission_requesting_str">Permission requesting…</string>
+    <string name="permission_already_granted_str">Location fine permission already granted</string>
+    <string name="permission_granted">Permission granted</string>
+    <string name="permission_denied_str">Permission denied</string>
+    <string name="permission_denied_message_str">Please allow geolocation autorisation to continue</string>
 </resources>
