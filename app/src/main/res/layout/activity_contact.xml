@@ -15,19 +15,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phone_call_button" />
 
-    <include layout="@layout/item_details" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/item_details" />
 
     <EditText
         android:id="@+id/sms_content_editText"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
         app:layout_constraintWidth_percent="0.8" />
 
     <Button
