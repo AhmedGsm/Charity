@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -40,15 +39,17 @@ public class PlacesDetailsActivity extends AppCompatActivity implements PlacesDe
     private List<Place> mPlacesList = new ArrayList<>();
     private int mCursorDataCount;
     private PlacesDetailsAdapter mAdapter;
-    @BindView(R.id.recylerViewList) RecyclerView mRecyclerView;
+    @BindView(R.id.recylerViewList)
+    RecyclerView mRecyclerView;
     // Get search view reference
-    @BindView(R.id.ProgressBar) ProgressBar mProgressBar;
+    @BindView(R.id.ProgressBar)
+    ProgressBar mProgressBar;
     public static final String STRING_KEY_PLACE_NAME = "place_name_key";
     public static final String STRING_KEY_PLACE_ADDRESS = "place_address_key";
     public static final String STRING_KEY_PLACE_PHONE = "place_phone_key";
-    public static final String STRING_KEY_PLACE_WEBSITE= "place_website_key";
-    public static final String STRING_KEY_PLACE_LONGITUDE= "place_longitude_key";
-    public static final String STRING_KEY_PLACE_LATITUDE= "place_longitude_key";
+    public static final String STRING_KEY_PLACE_WEBSITE = "place_website_key";
+    public static final String STRING_KEY_PLACE_LONGITUDE = "place_longitude_key";
+    public static final String STRING_KEY_PLACE_LATITUDE = "place_longitude_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +78,30 @@ public class PlacesDetailsActivity extends AppCompatActivity implements PlacesDe
                 null,
                 null);
         if (data == null || data.getCount() == 0) {
-            Toast.makeText(this,R.string.no_places_in_data_provider_str,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_places_in_data_provider_str, Toast.LENGTH_LONG).show();
             mProgressBar.setVisibility(View.GONE);
             return;
         }
         mCursorDataCount = data.getCount();
-        while (data.moveToNext()) {
-            String placeId = data.getString(data.getColumnIndex(PlaceContract.PlaceEntry.COLUMN_PLACE_ID));
-            findPlacesListByPlacesIds(placeId);
-        }
-        data.close();
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                while (data.moveToNext()) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    String placeId = data.getString(data.getColumnIndex(PlaceContract.PlaceEntry.COLUMN_PLACE_ID));
+                    findPlacesListByPlacesIds(placeId);
+                    Log.e("Thread", "while loop");
+                }
+                data.close();
+            }
+        };
+        //Start new thread
+        thread.start();
     }
 
     /**
@@ -109,7 +124,9 @@ public class PlacesDetailsActivity extends AppCompatActivity implements PlacesDe
         // Add a listener to handle the response.
         fetchPlaceResponseTask.addOnSuccessListener(fetchPlaceResponse -> {
             Place place = fetchPlaceResponse.getPlace();
-            mPlacesList.add(place);
+            if (!TextUtils.isEmpty(place.getPhoneNumber())) {
+                mPlacesList.add(place);
+            }
             if (mIndex == mCursorDataCount) {
                 mAdapter.swapPlaces(mPlacesList);
                 mProgressBar.setVisibility(View.GONE);
@@ -153,7 +170,7 @@ public class PlacesDetailsActivity extends AppCompatActivity implements PlacesDe
         if (place.getWebsiteUri() != null) {
             bundle.putString(STRING_KEY_PLACE_WEBSITE, place.getWebsiteUri().toString());
         }
-        if (place.getLatLng() != null ) {
+        if (place.getLatLng() != null) {
             bundle.putDouble(STRING_KEY_PLACE_LONGITUDE, place.getLatLng().latitude);
         }
         if (place.getLatLng() != null) {
@@ -165,4 +182,6 @@ public class PlacesDetailsActivity extends AppCompatActivity implements PlacesDe
         // Launch contact activity
         startActivity(intentToContactActivity);
     }
+
 }
+
