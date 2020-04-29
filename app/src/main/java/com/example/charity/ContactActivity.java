@@ -15,6 +15,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static java.net.Proxy.Type.HTTP;
+
 public class ContactActivity extends AppCompatActivity {
 
     @BindView(R.id.place_name)TextView placeNameTv;
@@ -95,7 +97,7 @@ public class ContactActivity extends AppCompatActivity {
         });
 
         // Implement Map navigating
-         Uri geoLocationUri = Uri.parse("geo:" + latitude + "," + longitude + "?z=5");
+        Uri geoLocationUri = Uri.parse("geo:" + latitude + "," + longitude + "?z=5");
         showMapButton.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(geoLocationUri);
@@ -103,6 +105,20 @@ public class ContactActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
-    });
-}
+        });
+
+        // Implement SMS sending
+        sendSmsButton.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("smsto:" + phoneNumber));  // This ensures only SMS apps respond
+            intent.putExtra("subject", getString(R.string.charity_sms_subject));
+            intent.putExtra("sms_body", getString(R.string.charity_sms_message));
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+
+        });
+
+
+    }
 }

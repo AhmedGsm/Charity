@@ -33,4 +33,10 @@
     <string name="visit_website_button_str">Visit website</string>
     <string name="show_location_button_str">Show  location in map</string>
     <string name="phone_call_button_str">Call</string>
+    <string name="charity_sms_subject">Charity request</string>
+    <string name="charity_sms_message">
+        I take this opportunity to request for donations to charity association or to
+        jobless and needy peaple during this pandemic COVID-19. We appreciate your support
+        so far in funding our project.
+    </string>
 </resources>
