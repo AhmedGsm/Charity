@@ -4,13 +4,13 @@
     <string name="charity_introduction">
     This app made for making search for benefactors and send them text messages or emails
     to convince them to donate money or food or medicines for charity associations, to help
-    jobless or destitute or poor people who are suffering during acual COVID-19 pandemy.
+    jobless or destitute or poor people who are suffering during actual COVID-19 pandemy.
     You can search for benefactors by entering the locals that are profited during the
     COVID-19 pandemic by selling a lot of products, for example search for "Pharmacy" in a
     specific region or department.
     </string>
 
-    <string name="search_benefactor_btn_text">Search benefactor</string>
+    <string name="show_locals_btn_text">Show locals</string>
     <string name="search_benefactor_legend_text">
         Search for benefactors by entering the local names such as "Pharmacy" or "Supermarket",
         after search done, the server displays a list of locals with their details such as
@@ -45,7 +45,8 @@
     <string name="permission_granted">Permission granted</string>
     <string name="permission_denied_str">Permission denied</string>
     <string name="permission_denied_message_str">Please allow geolocation autorisation to continue</string>
+    <string name="main_fragment_title">Charity</string>
+    <string name="details_fragment_title">Locals</string>
+    <string name="search_fragment_title">Locals finding</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

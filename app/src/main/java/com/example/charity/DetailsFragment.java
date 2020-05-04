@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.example.charity.adapters.PlacesDetailsAdapter;
 import com.example.charity.database.PlaceContract;
 import com.google.android.gms.common.api.ApiException;
@@ -28,7 +28,6 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,15 +42,13 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.OnClickRecyclerViewItem{
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private static final String TAG = PlacesDetailsActivity.class.getSimpleName();
+    private static final String TAG = DetailsFragment.class.getSimpleName();
     private PlacesClient mPlacesClient;
     private int mIndex = 0;
     private List<Place> mPlacesList = new ArrayList<>();
@@ -68,6 +65,7 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     public static final String STRING_KEY_PLACE_WEBSITE = "place_website_key";
     public static final String STRING_KEY_PLACE_LONGITUDE = "place_longitude_key";
     public static final String STRING_KEY_PLACE_LATITUDE = "place_longitude_key";
+    private View mView;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -81,7 +79,6 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
      * @param param2 Parameter 2.
      * @return A new instance of fragment DetailsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static DetailsFragment newInstance(String param1, String param2) {
         DetailsFragment fragment = new DetailsFragment();
         Bundle args = new Bundle();
@@ -111,9 +108,9 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         // Bind butterKnife library to activity
         ButterKnife.bind(this,view);
+        mView = view;
 
         // Initialize the SDK
         Places.initialize(getContext(), SearchFragment.API_KEY);
@@ -208,34 +205,31 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     public void onItemClick(int positionAdapter) {
         Place place = mPlacesList.get(positionAdapter);
         // Fill extras bundle of Intent
-        Bundle bundle = new Bundle();
-        bundle.putString(STRING_KEY_PLACE_NAME, getString(R.string.data_not_available_str));
+        Bundle bundleToDetails = new Bundle();
+        bundleToDetails.putString(STRING_KEY_PLACE_NAME, getString(R.string.data_not_available_str));
         if (!TextUtils.isEmpty(place.getName())) {
-            bundle.putString(STRING_KEY_PLACE_NAME, place.getName());
+            bundleToDetails.putString(STRING_KEY_PLACE_NAME, place.getName());
         }
-        bundle.putString(STRING_KEY_PLACE_ADDRESS, getString(R.string.data_not_available_str));
+        bundleToDetails.putString(STRING_KEY_PLACE_ADDRESS, getString(R.string.data_not_available_str));
         if (!TextUtils.isEmpty(place.getAddress())) {
-            bundle.putString(STRING_KEY_PLACE_ADDRESS, place.getAddress());
+            bundleToDetails.putString(STRING_KEY_PLACE_ADDRESS, place.getAddress());
         }
-        bundle.putString(STRING_KEY_PLACE_PHONE, getString(R.string.data_not_available_str));
+        bundleToDetails.putString(STRING_KEY_PLACE_PHONE, getString(R.string.data_not_available_str));
         if (!TextUtils.isEmpty(place.getPhoneNumber())) {
-            bundle.putString(STRING_KEY_PLACE_PHONE, place.getPhoneNumber());
+            bundleToDetails.putString(STRING_KEY_PLACE_PHONE, place.getPhoneNumber());
         }
-        bundle.putString(STRING_KEY_PLACE_WEBSITE, getString(R.string.data_not_available_str));
+        bundleToDetails.putString(STRING_KEY_PLACE_WEBSITE, getString(R.string.data_not_available_str));
         if (place.getWebsiteUri() != null) {
-            bundle.putString(STRING_KEY_PLACE_WEBSITE, place.getWebsiteUri().toString());
+            bundleToDetails.putString(STRING_KEY_PLACE_WEBSITE, place.getWebsiteUri().toString());
         }
         if (place.getLatLng() != null) {
-            bundle.putDouble(STRING_KEY_PLACE_LONGITUDE, place.getLatLng().latitude);
+            bundleToDetails.putDouble(STRING_KEY_PLACE_LONGITUDE, place.getLatLng().latitude);
         }
         if (place.getLatLng() != null) {
-            bundle.putDouble(STRING_KEY_PLACE_LATITUDE, place.getLatLng().latitude);
+            bundleToDetails.putDouble(STRING_KEY_PLACE_LATITUDE, place.getLatLng().latitude);
         }
-        // Initialize intent to contact activity
-        Intent intentToContactActivity = new Intent(getContext(), ContactActivity.class);
-        intentToContactActivity.putExtras(bundle);
-        // Launch contact activity
-        startActivity(intentToContactActivity);
+        // Navigate to details fragment
+        NavController navController = Navigation.findNavController(mView);
+        navController.navigate(R.id.action_detailsFragment_to_contactFragment,bundleToDetails);
     }
-
 }

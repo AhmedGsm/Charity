@@ -52,13 +52,7 @@ public class SearchFragment extends Fragment {
     private String mParam2;
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static final String PLACE_SEARCHED_BUNDLE = "places_bundle";
-    private double mCurrentLongitude;
-    private double mCurrentLatitude;
     private LatLng mCurrentLatLng;
-    private String LATITUDE_EXTRA = "latitude_extra_value";
-    private String LONGITUDE_EXTRA = "longitude_extra_value";
-    private static final String SEARCH_QUERY = "search_query";
     private static final int SEARCH_SURFACE = 40 ; // 400 kilometers square / 20 kilo
     // Get search view reference
     @BindView(R.id.search_view_for_benefactors)
@@ -69,7 +63,6 @@ public class SearchFragment extends Fragment {
     //Google account Api key
     private static String API_KEY1 = "AIzaSyCeOX-6wnF-i2hiWcwFRUWuqt4Cgbib7KA";
     private static String API_KEY2 = "AIzaSyBDTy_VMG4yVBe36tWMftmO-kXmjpenODg";
-    private int SEARCH_ID = 30;
     public static String API_KEY = API_KEY2;
     private int i = 1;
     public static final String PLACES_IDS_EXTRA = "places_ids";;
@@ -90,7 +83,6 @@ public class SearchFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment SearchFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SearchFragment newInstance(String param1, String param2) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
@@ -107,7 +99,6 @@ public class SearchFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -122,16 +113,9 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // initialize view Object with inflated fragment view
         mView = view;
-
-        /**
-         * For testing purposes THIS CODE WILL BE DELETED
-
-         Intent intent = new Intent(this,PlacesDetailsActivity.class);
-         startActivity(intent);
-         */
         // Bind butterKnife library to activity
         ButterKnife.bind(this,view);
-        //
+        // Launch place serching request
         searchPlaces();
         };
 
@@ -187,7 +171,7 @@ public class SearchFragment extends Fragment {
             // Hide search View and display progress bar
             mSearchView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
-            // Launch places finding request
+            // Launch places search request
             this.findPlacesList(getContext(), mPlacesClient, searchQuery);
     }
 
@@ -258,8 +242,6 @@ public class SearchFragment extends Fragment {
                         bundlePlaceDetails.putStringArrayList(PLACES_NAMES_EXTRA,placesNames);
                         bundlePlaceDetails.putStringArrayList(PLACES_ADDRESSES_EXTRA,placesAddresses);
                         // Navigate to search results Fragment
-                        // Using safe Args !!?????????
-
                         mNavController = Navigation.findNavController(mView);
                         mNavController.navigate(R.id.actionResults,bundlePlaceDetails);
                     } else {

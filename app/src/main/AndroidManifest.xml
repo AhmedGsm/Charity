@@ -10,15 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ContactActivity"
-            android:label="@string/activity_contact_name" />
-        <activity
-            android:name=".PlacesDetailsActivity"
-            android:label="@string/activity_details_name" />
-        <activity
-            android:name=".SearchResultsActivity"
-            android:label="@string/activity_search_name" />
-        <activity android:name=".PlacesFindingActivity" />
         <activity android:name=".MainActivity">
             <meta-data
                 android:name="com.google.android.geo.API_KEY"

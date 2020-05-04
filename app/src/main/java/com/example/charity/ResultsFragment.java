@@ -56,7 +56,6 @@ public class ResultsFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment ResultsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ResultsFragment newInstance(String param1, String param2) {
         ResultsFragment fragment = new ResultsFragment();
         Bundle args = new Bundle();
@@ -87,17 +86,14 @@ public class ResultsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // Bind butterKnife library to activity
         ButterKnife.bind(this,view);
-        // Receive intent from search results intent
-        // Intent currentIntent= getIntent();
+        // Receive Bundle from search results Fragment
         Bundle bundleFromSearchFragment= getArguments();
-        int sizebundle = bundleFromSearchFragment.size();
         // set up the recycler view
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new PlacesSearchAdapter(getContext(), null);
         mRecyclerView.setAdapter(mAdapter);
         // Display store found in recycler view
         mAdapter.swapStores(bundleFromSearchFragment);
-
         // Save store ids in content provider
         saveListButton.setOnClickListener(viewL -> {
             saveIdsInContentProvider(bundleFromSearchFragment);
@@ -105,7 +101,7 @@ public class ResultsFragment extends Fragment {
     }
 
     /**
-     * Helper method to save store Ids list to content provider
+     * Helper method to save places Ids list in content provider
      */
     private void saveIdsInContentProvider(Bundle placesBundle) {
         ArrayList<String> placesIdList =  placesBundle.getStringArrayList(SearchFragment.PLACES_IDS_EXTRA);
