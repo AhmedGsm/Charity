@@ -40,12 +40,12 @@ public class ContactActivity extends AppCompatActivity {
         Intent currentIntent= getIntent();
         Bundle bundleFromDetailsActivity = currentIntent.getExtras();
         assert bundleFromDetailsActivity != null;
-        String placeName = bundleFromDetailsActivity.getString(PlacesDetailsActivity.STRING_KEY_PLACE_NAME);
-        String placeAddress = bundleFromDetailsActivity.getString(PlacesDetailsActivity.STRING_KEY_PLACE_ADDRESS);
-        String phoneNumber = bundleFromDetailsActivity.getString(PlacesDetailsActivity.STRING_KEY_PLACE_PHONE);
-        String website = bundleFromDetailsActivity.getString(PlacesDetailsActivity.STRING_KEY_PLACE_WEBSITE);
-        double longitude = bundleFromDetailsActivity.getDouble(PlacesDetailsActivity.STRING_KEY_PLACE_LONGITUDE);
-        double latitude = bundleFromDetailsActivity.getDouble(PlacesDetailsActivity.STRING_KEY_PLACE_LATITUDE);
+        String placeName = bundleFromDetailsActivity.getString(DetailsFragment.STRING_KEY_PLACE_NAME);
+        String placeAddress = bundleFromDetailsActivity.getString(DetailsFragment.STRING_KEY_PLACE_ADDRESS);
+        String phoneNumber = bundleFromDetailsActivity.getString(DetailsFragment.STRING_KEY_PLACE_PHONE);
+        String website = bundleFromDetailsActivity.getString(DetailsFragment.STRING_KEY_PLACE_WEBSITE);
+        double longitude = bundleFromDetailsActivity.getDouble(DetailsFragment.STRING_KEY_PLACE_LONGITUDE);
+        double latitude = bundleFromDetailsActivity.getDouble(DetailsFragment.STRING_KEY_PLACE_LATITUDE);
         // If website is null replace it with 'None' text inside textView
         placeNameTv.setText(R.string.data_not_available_str);
         if(!TextUtils.isEmpty(placeName)) {
