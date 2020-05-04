@@ -8,10 +8,24 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+
+import java.util.zip.Inflater;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 302;
+    // Reference Navigation View
+    @BindView(R.id.bottom_nav) BottomNavigationView mBottomNavigationView ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Request location fine permission
         requestPermission();
+        // Bind view
+        ButterKnife.bind(this);
+        // Setup Bottom navigation View
+        NavController navController = Navigation.findNavController(this,R.id.nav_host_fragment);
+        // Inflate navigation menu
+        int nm = mBottomNavigationView.getMaxItemCount();
+       // mBottomNavigationView.inflateMenu(R.menu.menu_bottom_nav);
+        NavigationUI.setupWithNavController(mBottomNavigationView,navController);
     }
 
     /**
