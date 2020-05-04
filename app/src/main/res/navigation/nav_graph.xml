@@ -10,9 +10,6 @@
         android:name="com.example.charity.MainFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
     </fragment>
@@ -22,7 +19,7 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_searchFragment_to_resultsFragment"
+            android:id="@+id/actionResults"
             app:destination="@id/resultsFragment" />
     </fragment>
     <fragment
@@ -35,6 +32,9 @@
         android:name="com.example.charity.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
         <action
             android:id="@+id/action_detailsFragment_to_contactFragment"
             app:destination="@id/contactFragment" />

@@ -2,7 +2,6 @@ package com.example.charity;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -132,9 +130,7 @@ public class SearchFragment extends Fragment {
          startActivity(intent);
          */
         // Bind butterKnife library to activity
-        ButterKnife.bind(view);
-        mSearchView = view.findViewById(R.id.search_view_for_benefactors);
-        mProgressBar = view.findViewById(R.id.progress_bar);
+        ButterKnife.bind(this,view);
         //
         searchPlaces();
         };
@@ -261,9 +257,11 @@ public class SearchFragment extends Fragment {
                         bundlePlaceDetails.putStringArrayList(PLACES_IDS_EXTRA,placesIds);
                         bundlePlaceDetails.putStringArrayList(PLACES_NAMES_EXTRA,placesNames);
                         bundlePlaceDetails.putStringArrayList(PLACES_ADDRESSES_EXTRA,placesAddresses);
-                        //Navigate to search results Fragment
+                        // Navigate to search results Fragment
+                        // Using safe Args !!?????????
+
                         mNavController = Navigation.findNavController(mView);
-                        mNavController.navigate(R.id.action_searchFragment_to_resultsFragment,bundlePlaceDetails);
+                        mNavController.navigate(R.id.actionResults,bundlePlaceDetails);
                     } else {
                         Log.i(TAG, getString(R.string.place_not_found_str));
                         Toast.makeText(getContext(), getString(R.string.place_not_found_str),Toast.LENGTH_SHORT).show();
