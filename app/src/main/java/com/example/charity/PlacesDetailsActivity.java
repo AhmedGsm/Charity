@@ -60,7 +60,7 @@ public class PlacesDetailsActivity extends AppCompatActivity implements PlacesDe
         ButterKnife.bind(this);
 
         // Initialize the SDK
-        Places.initialize(getApplicationContext(), PlacesFindingActivity.API_KEY);
+        Places.initialize(getApplicationContext(), SearchFragment.API_KEY);
 
         // Create a new Places client instance
         mPlacesClient = Places.createClient(this);

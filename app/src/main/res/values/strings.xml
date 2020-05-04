@@ -17,7 +17,7 @@
         phone number, email, etc, to use these informations to call for donation.
     </string>
     <string name="place_not_found_str">Place not found</string>
-    <string name="place_not_found_Api_error">Place not fetched due to server authorization problem</string>
+    <string name="place_not_found_Api_error">Server authorization problem: %s</string>
     <string name="activity_search_name">Search list</string>
     <string name="image_description">Store icon</string>
     <string name="save_stores_button_str">Save list</string>
@@ -45,4 +45,7 @@
     <string name="permission_granted">Permission granted</string>
     <string name="permission_denied_str">Permission denied</string>
     <string name="permission_denied_message_str">Please allow geolocation autorisation to continue</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

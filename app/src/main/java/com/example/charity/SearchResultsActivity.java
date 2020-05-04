@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.charity.adapters.PlacesSearchAdapter;
 import com.example.charity.database.PlaceContract;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     // Get search benefactors button reference
     @BindView(R.id.stores_list_recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.save_stores_list_button) Button  saveListButton;
-    private com.example.charity.PlacesSearchAdapter mAdapter;
+    private PlacesSearchAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         int sizebundle = bundleFromSearchResultsActivity.size();
         // set up the recycler view
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new com.example.charity.PlacesSearchAdapter(SearchResultsActivity.this, null);
+        mAdapter = new PlacesSearchAdapter(SearchResultsActivity.this, null);
         mRecyclerView.setAdapter(mAdapter);
         // Display store found in recycler view
         mAdapter.swapStores(bundleFromSearchResultsActivity);
@@ -52,7 +53,7 @@ public class SearchResultsActivity extends AppCompatActivity {
      * Helper method to save store Ids list to content provider
      */
     private void saveIdsInContentProvider(Bundle placesBundle) {
-        ArrayList<String> placesIdList =  placesBundle.getStringArrayList(PlacesFindingActivity.PLACES_IDS_EXTRA);
+        ArrayList<String> placesIdList =  placesBundle.getStringArrayList(SearchFragment.PLACES_IDS_EXTRA);
         // Initialize Content values
         ContentValues values = new ContentValues();
         for(int i = 0; i < placesIdList.size(); i++) {

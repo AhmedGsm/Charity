@@ -1,4 +1,4 @@
-package com.example.charity;
+package com.example.charity.adapters;
 
 /*
 * Copyright (C) 2020 Charity android app
@@ -24,6 +24,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.charity.MainActivity;
+import com.example.charity.R;
+import com.example.charity.SearchFragment;
 
 public class PlacesSearchAdapter extends RecyclerView.Adapter<PlacesSearchAdapter.PlaceViewHolder> {
 
@@ -70,13 +74,11 @@ public class PlacesSearchAdapter extends RecyclerView.Adapter<PlacesSearchAdapte
      */
     @Override
     public void onBindViewHolder(PlaceViewHolder holder, int position) {
-        String placeName = mBundle.getStringArrayList(PlacesFindingActivity.PLACES_NAMES_EXTRA).get(position);
-        String placeAddress = mBundle.getStringArrayList(PlacesFindingActivity.PLACES_ADDRESSES_EXTRA).get(position);
+        String placeName = mBundle.getStringArrayList(SearchFragment.PLACES_NAMES_EXTRA).get(position);
+        String placeAddress = mBundle.getStringArrayList(SearchFragment.PLACES_ADDRESSES_EXTRA).get(position);
         holder.storeNameTextView.setText(placeName);
         holder.storeAddressTextView.setText(placeAddress);
     }
-
-
 
     /**
      * PlaceViewHolder class for the recycler view item
@@ -102,6 +104,6 @@ public class PlacesSearchAdapter extends RecyclerView.Adapter<PlacesSearchAdapte
     @Override
     public int getItemCount() {
         if(mBundle==null) return 0;
-        return mBundle.getStringArrayList(PlacesFindingActivity.PLACES_IDS_EXTRA).size();
+        return mBundle.getStringArrayList(SearchFragment.PLACES_IDS_EXTRA).size();
     }
 }
