@@ -59,6 +59,6 @@
     <string name="gps_not_enabled">Localisation not enabled, click \'settings\' button to enable it</string>
     <string name="setting_button">Go to settings</string>
     <string name="send_charity_requests">Send charity request</string>
-    <string name="error_fetching_current_postion">Error when checking your position</string>
-    <string name="error_requesting_server">Error when requesting server, please try again in few moments: %s</string>
+    <string name="error_fetching_current_position">Error when checking your position</string>
+    <string name="error_requesting_server">Server error, check your internet connection or try in a few moments: %s</string>
 </resources>

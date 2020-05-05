@@ -28,10 +28,8 @@ public class ContactFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     private String mParam1;
     private String mParam2;
-
     @BindView(R.id.place_name)
     TextView placeNameTv;
     @BindView(R.id.place_address) TextView placeAddressTv;
@@ -42,6 +40,7 @@ public class ContactFragment extends Fragment {
     @BindView(R.id.send_sms_button) Button sendSmsButton;
     @BindView(R.id.show_location_button) Button showMapButton;
     @BindView(R.id.visit_website_button) Button visitWebsiteButton;
+
     public ContactFragment() {
         // Required empty public constructor
     }

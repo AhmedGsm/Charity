@@ -211,7 +211,7 @@ public class SearchFragment extends Fragment {
             String name = placeFound.getName();
             mCurrentLatLng = placeFound.getLatLng();
             if (mCurrentLatLng == null) {
-             Snackbar.make(mView, R.string.error_fetching_current_postion, Snackbar.LENGTH_LONG).show();
+             Snackbar.make(mView, R.string.error_fetching_current_position, Snackbar.LENGTH_LONG).show();
                 return;
             }
             // Set text legend after fetching current position
@@ -224,7 +224,9 @@ public class SearchFragment extends Fragment {
         })
                 .addOnFailureListener(e -> {
                     String errorMessage =  e.getLocalizedMessage();
-                    Snackbar.make(mView, getString(R.string.error_requesting_server, errorMessage), Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(mContext,
+                            getString(R.string.error_requesting_server, errorMessage),
+                            Toast.LENGTH_LONG).show();
                     searchLocalsLegendTv.setText(getString(R.string.error_requesting_server));
                     Log.e(TAG, "Failed to fetch current place: " + errorMessage);
                 }
@@ -345,7 +347,9 @@ public class SearchFragment extends Fragment {
             if (exception instanceof ApiException) {
                 ApiException apiException = (ApiException) exception;
                 Log.e(TAG, context.getString(R.string.place_not_found_str) + " " + apiException.getStatusCode() + " " + apiException.getMessage());
-                Toast.makeText(context, context.getString(R.string.place_not_found_Api_error, apiException.getMessage()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,
+                        context.getString(R.string.place_not_found_Api_error,
+                                apiException.getMessage()), Toast.LENGTH_SHORT).show();
                 // Display search view and hide progress
                 mProgressBar.setVisibility(View.GONE);
                 mSearchView.setVisibility(View.VISIBLE);
