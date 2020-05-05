@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.charity.adapters.PlacesDetailsAdapter;
 import com.example.charity.database.PlaceContract;
@@ -63,7 +62,7 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     private int mCursorDataCount;
     private PlacesDetailsAdapter mAdapter;
     private NavController mNavController;
-    private boolean needToFetchLocals = true;
+    private boolean needToUpdateLocals = true;
     // Get references views
     @BindView(R.id.recylerViewList)
     RecyclerView mRecyclerView;
@@ -117,6 +116,24 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
         }
     }
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_details, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Bind butterKnife library to activity
+        ButterKnife.bind(this, view);
+        mView = view;
+        // Get navigation controller
+        mNavController = Navigation.findNavController(view);
+    }
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -126,8 +143,14 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     @Override
     public void onResume() {
         super.onResume();
-        findLocals();
-        needToFetchLocals = false;
+
+        /*TEMPO*//*TEMPO*/
+        // Request only if we go back from settings activity
+        if(needToUpdateLocals) {
+            findLocals();
+        }
+        // To prevent request server after returning from home or recent buttons clicking
+        needToUpdateLocals = false;
     }
 
     private void findLocals() {
@@ -149,14 +172,13 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
                 Intent intentToInternetSettings = new Intent(Settings.ACTION_WIFI_SETTINGS);
                 if (intentToInternetSettings.resolveActivity(mContext.getPackageManager()) != null) {
                     startActivity(intentToInternetSettings);
-                    needToFetchLocals = true;
+                    needToUpdateLocals = true;
                 }
             });
             return;
         }
 
         // Fetch locals if internet and GPS are enabled
-
         fetchLocals();
     }
 
@@ -167,41 +189,37 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     // Launch place searching request
     //searchPlaces();
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        // Bind butterKnife library to activity
-        ButterKnife.bind(this, view);
-        mView = view;
-        // Get navigation controller
-
-        mNavController = Navigation.findNavController(view);
-    }
-
     private void fetchLocals() {
-
-        // Initialize the SDK
-        Places.initialize(getContext(), SearchFragment.API_KEY);
-        // Create a new Places client instance
-        mPlacesClient = Places.createClient(getContext());
         /*
          * Attach click listener to register locals button
          * When clicked go to
          */
         mRegisterLocalsButton.setOnClickListener(view1 ->
                 mNavController.navigate(R.id.action_detailsFragment_to_searchFragment));
+
         // set up the recycler view
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new PlacesDetailsAdapter(getContext(), null, this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mAdapter = new PlacesDetailsAdapter(mContext, null, this);
         mRecyclerView.setAdapter(mAdapter);
+        /**
+         * When return back from next fragment(Contact fragment)
+         * places List not destroyed, so we populate the recycler from
+         * Existing places List object, don't need to request them from server
+         */
+        if (mPlacesList != null && mPlacesList.size() > 0) {
+            mAdapter.swapPlaces(mPlacesList);
+            //mRecyclerView.setAdapter(mAdapter);
+            //mRecyclerView.setAdapter(mAdapter);
+            mProgressBar.setVisibility(View.GONE);
+            mRegisterLocalsButton.setVisibility(View.GONE);
+            mNoLocalsTv.setVisibility(View.GONE);
+            return;
+        }
+
+        // Initialize the SDK
+        Places.initialize(mContext, SearchFragment.API_KEY);
+        // Create a new Places client instance
+        mPlacesClient = Places.createClient(mContext);
         // Query places Ids from database
         Uri uri = PlaceContract.PlaceEntry.CONTENT_URI;
         final Cursor data = getActivity().getContentResolver().query(
@@ -211,7 +229,7 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
                 null,
                 null);
         if (data == null || data.getCount() == 0) {
-            /*Toast.makeText(getContext(),
+            /*Toast.makeText(mContext,
                     getString(R.string.no_places_in_data_provider_str),
                     Toast.LENGTH_LONG).show();*/
             mProgressBar.setVisibility(View.GONE);
@@ -234,6 +252,8 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    /*Find places*/
+                    /*Find places*/
                     String placeId = data.getString(data.getColumnIndex(PlaceContract.PlaceEntry.COLUMN_PLACE_ID));
                     findPlacesListByPlacesIds(placeId);
                     Log.e("Thread", "while loop");
@@ -320,5 +340,6 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
         // Navigate to details fragment
         NavController navController = Navigation.findNavController(mView);
         navController.navigate(R.id.action_detailsFragment_to_contactFragment, bundleToDetails);
+        needToUpdateLocals = true;
     }
 }

@@ -91,9 +91,13 @@ public class PlacesDetailsAdapter extends RecyclerView.Adapter<PlacesDetailsAdap
 
     public void swapPlaces(List<Place> places) {
         this.mPlaces = places;
+        /*REMOVED TEMPORARY!!!!!!!!!!!!!!!!!!**/
+        /*REMOVED TEMPORARY!!!!!!!!!!!!!!!!!!***/
         notifyDataSetChanged();
+        /*REMOVED TEMPORARY!!!!!!!!!!!!!!!!!!***/
+        /*REMOVED TEMPORARY!!!!!!!!!!!!!!!!!!***/
     }
-    public interface OnClickRecyclerViewItem{
+    public interface OnClickRecyclerViewItem {
          void onItemClick(int positionAdapter);
     }
 }
