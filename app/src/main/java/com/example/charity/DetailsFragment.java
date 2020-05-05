@@ -5,15 +5,17 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.example.charity.adapters.PlacesDetailsAdapter;
 import com.example.charity.database.PlaceContract;
 import com.example.charity.utils.Utils;
@@ -34,14 +35,11 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,7 +50,6 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     private String mParam1;
     private String mParam2;
     private static final String TAG = DetailsFragment.class.getSimpleName();
@@ -72,8 +69,6 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     Button mRegisterLocalsButton;
     @BindView(R.id.no_places_tv)
     TextView mNoLocalsTv;
-
-    //@BindView(R.id.search_locals_legend_tv) TextView searchLocalsLegendTv ;
     @BindView(R.id.goto_settings_buttons)
     Button gotoSettingsButtons;
 
@@ -85,6 +80,7 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     public static final String STRING_KEY_PLACE_LATITUDE = "place_longitude_key";
     private View mView;
     private Context mContext;
+    private CharityViewModel mViewModel;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -114,8 +110,28 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // If the state is saved in View model then restore values from view model
+        // NavBackStackEntry backStackEntry = mNavController.getBackStackEntry(R.id.nav_graph);
+         CharityViewModel viewModel = new ViewModelProvider(this).get(CharityViewModel.class);
+         viewModel.getPlacesList().observe(this, new Observer<List<Place>>() {
+                @Override
+                public void onChanged(List<Place> places) {
+                    mPlacesList = places;
+                }
+            });
+
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        /**
+         *Save places list when configuration changes,
+         * Such as device rotating
+         */
+        CharityViewModel viewModel = new ViewModelProvider(this).get(CharityViewModel.class);
+        viewModel.setPlacesList(new MutableLiveData<>(mPlacesList));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,7 +160,6 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     public void onResume() {
         super.onResume();
 
-        /*TEMPO*//*TEMPO*/
         // Request only if we go back from settings activity
         if(needToUpdateLocals) {
             findLocals();
