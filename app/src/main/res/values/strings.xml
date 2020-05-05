@@ -27,8 +27,11 @@
     <string name="image_description_phone">Place phone icon</string>
     <string name="image_description_website">Place website icon</string>
     <string name="data_not_available_str">None</string>
-    <string name="no_places_in_data_provider_str">No places registered, go to main screen to register places</string>
+    <string name="no_places_in_data_provider_str">No locals registered, click button below to add new places</string>
+    <string name="wait_fetching_current_position">Please wait while checking your current position…</string>
+
     <string name="activity_contact_name">Contact</string>
+    <string name="str_btn_add_places">Register locals</string>
     <string name="send_sms_button_str">Send SMS</string>
     <string name="visit_website_button_str">Visit website</string>
     <string name="show_location_button_str">Show  location in map</string>
@@ -39,14 +42,23 @@
         jobless and needy peaple during this pandemic COVID-19. We appreciate your support
         so far in funding our project.
     </string>
-    <string name="permission_rejected_str">Location fine permission is rejected</string>
+    <string name="permission_already_rejected_str">Location fine permission is already rejected</string>
     <string name="permission_requesting_str">Permission requesting…</string>
     <string name="permission_already_granted_str">Location fine permission already granted</string>
     <string name="permission_granted">Permission granted</string>
     <string name="permission_denied_str">Permission denied</string>
-    <string name="permission_denied_message_str">Please allow geolocation autorisation to continue</string>
-    <string name="main_fragment_title">Charity</string>
-    <string name="details_fragment_title">Locals</string>
+    <string name="permission_denied_message_str">Please allow geolocation authorization to continue</string>
+    <string name="main_fragment_title">Intro</string>
+    <string name="details_fragment_title">Saved locals</string>
     <string name="search_fragment_title">Locals finding</string>
-
+    <string name="permission_not_granted">
+        Please enable geo permission, go to settings and enable it,
+        or clear application data or reinstall it.
+    </string>
+    <string name="wifi_not_enabled">Internet is not enabled, click \'settings\' button to enable it</string>
+    <string name="gps_not_enabled">Localisation not enabled, click \'settings\' button to enable it</string>
+    <string name="setting_button">Go to settings</string>
+    <string name="send_charity_requests">Send charity request</string>
+    <string name="error_fetching_current_postion">Error when checking your position</string>
+    <string name="error_requesting_server">Error when requesting server, please try again in few moments: %s</string>
 </resources>

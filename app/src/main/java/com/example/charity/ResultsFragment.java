@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,7 +44,9 @@ public class ResultsFragment extends Fragment {
     RecyclerView mRecyclerView;
     @BindView(R.id.save_stores_list_button)
     Button saveListButton;
+
     private PlacesSearchAdapter mAdapter;
+    private boolean isLocalsSaves;
 
     public ResultsFragment() {
         // Required empty public constructor
@@ -84,6 +88,9 @@ public class ResultsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Initialize Navigation controller
+
+        final NavController navController = Navigation.findNavController(view);
         // Bind butterKnife library to activity
         ButterKnife.bind(this,view);
         // Receive Bundle from search results Fragment
@@ -96,7 +103,13 @@ public class ResultsFragment extends Fragment {
         mAdapter.swapStores(bundleFromSearchFragment);
         // Save store ids in content provider
         saveListButton.setOnClickListener(viewL -> {
+            // If the list not saved, then save it in provider
+            if(!isLocalsSaves) {
             saveIdsInContentProvider(bundleFromSearchFragment);
+            return;
+            }
+            // If the list is already saved, then go locals details fragment
+            navController.navigate(R.id.detailsFragment);
         });
     }
 
@@ -111,5 +124,8 @@ public class ResultsFragment extends Fragment {
             values.put(PlaceContract.PlaceEntry.COLUMN_PLACE_ID,placesIdList.get(i));
             getActivity().getContentResolver().insert(PlaceContract.PlaceEntry.CONTENT_URI,values);
         }
+        isLocalsSaves =  true;
+        // Change button title to " Send Charity requests"
+        saveListButton.setText(R.string.send_charity_requests);
     }
 }

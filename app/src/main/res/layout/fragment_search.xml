@@ -7,12 +7,12 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/search_benefactor_legend_tv"
+        android:id="@+id/search_locals_legend_tv"
         style="@style/textNormalStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintVertical_chainStyle="packed"
-        android:text="@string/search_benefactor_legend_text"
+        android:text="@string/wait_fetching_current_position"
         app:layout_constraintBottom_toTopOf="@+id/search_view_for_benefactors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_benefactor_legend_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/search_locals_legend_tv" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -39,4 +39,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_view_for_benefactors" />
+
+    <Button
+        android:id="@+id/goto_settings_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setting_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_locals_legend_tv" />
 </androidx.constraintlayout.widget.ConstraintLayout>
