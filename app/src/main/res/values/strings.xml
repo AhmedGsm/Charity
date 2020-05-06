@@ -60,16 +60,23 @@
     <string name="setting_button">Go to settings</string>
     <string name="send_charity_requests">Send charity request</string>
     <string name="error_fetching_current_position">Error when checking your position</string>
-    <string name="error_requesting_server">Server error, check your internet connection or try in a few moments: %s</string>
+    <string name="error_requesting_server">Server error, check your internet connection or
+        try in a few moments: %s
+    </string>
     <!-- Preferences settings-->
-    <string name="pref_key_edittex_surface" translatable="false">key_edittex_surface</string>
-    <string name="pref_title_edittex_surface">Search surface</string>
-    <string name="pref_key_message_request" translatable="false">key_message_request</string>
-    <string name="pref_title_message_request">Charity message content</string>
+    <string name="pref_key_edittext_surface" translatable="false">key_edittext_surface</string>
+    <string name="pref_title_edittext_surface">Search surface(in Kilometers square)</string>
+    <string name="pref_default_value_edittext_surface">250</string>
+    <string name="pref_key_message_request" translatable="false">key_message_requests</string>
+    <string name="pref_title_message_request">Charity content message</string>
     <string name="pref_key_category_localisation" translatable="false">key_category_localisation</string>
     <string name="pref_title_category_localisation">Localisations settings</string>
     <string name="pref_key_category_charity" translatable="false">key_category_charity</string>
     <string name="pref_title_category_charity">Charity</string>
     <string name="setting_title">Settings</string>
+    <string name="value_surface_exeeded">Maximum value must be: %s, the entered value is exceeded</string>
+    <string name="value_surface_minimal">Minimum value must be: %s, the entered value is minimal</string>
+    <string name="empty_value_error_message">Empty values not accepted</string>
+
 
 </resources>
