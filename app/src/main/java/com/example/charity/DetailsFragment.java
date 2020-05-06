@@ -160,7 +160,7 @@ public class DetailsFragment extends Fragment implements PlacesDetailsAdapter.On
     public void onResume() {
         super.onResume();
 
-        // Request only if we go back from settings activity
+        // Request only if we go back from Contact fragment
         if(needToUpdateLocals) {
             findLocals();
         }

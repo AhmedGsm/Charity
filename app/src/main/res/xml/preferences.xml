@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="@string/pref_key_category_localisation"
+        android:title="@string/pref_title_category_localisation">
+        <EditTextPreference
+            android:key="@string/pref_key_edittex_surface"
+            android:title="@string/pref_title_edittex_surface"
+            android:defaultValue="250"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/pref_key_category_charity"
+        android:title="@string/pref_title_category_charity">
+        <EditTextPreference
+            android:key="@string/pref_key_message_request"
+            android:title="@string/pref_title_message_request" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
